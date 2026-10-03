@@ -1,115 +1,669 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Astra — Personal AI</title>
+<title>ASTRA — Your Personal AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: white;
-      background:
-        radial-gradient(circle at 20% 20%, #26344f 0%, transparent 35%),
-        radial-gradient(circle at 80% 80%, #321d38 0%, transparent 35%),
-        #05070b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    .glass {
-      width: min(90%, 520px);
-      padding: 55px 30px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 32px;
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      box-shadow:
-        0 25px 80px rgba(0,0,0,0.5),
-        inset 0 1px rgba(255,255,255,0.12);
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #020308;
+  color: white;
+  overflow-x: hidden;
+}
 
-    .logo {
-      font-size: 64px;
-      font-weight: 700;
-      letter-spacing: -4px;
-      margin-bottom: 10px;
-    }
+/* =========================
+   COSMIC BACKGROUND
+========================= */
 
-    .tagline {
-      font-size: 18px;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 35px;
-    }
+.space {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(50,75,130,.18), transparent 35%),
+    radial-gradient(circle at 20% 80%, rgba(90,40,130,.13), transparent 30%),
+    #020308;
+}
 
-    .download {
-      display: inline-block;
-      padding: 16px 32px;
-      border-radius: 18px;
-      background: white;
-      color: black;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 600;
-      transition: 0.25s;
-    }
+.space::before,
+.space::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(130,170,255,.5) 1px, transparent 1.5px);
+  background-size: 90px 90px, 150px 150px;
+  animation: stars 80s linear infinite;
+  opacity: .5;
+}
 
-    .download:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(255,255,255,0.2);
-    }
+.space::after {
+  background-size: 180px 180px;
+  animation-duration: 120s;
+  opacity: .25;
+}
 
-    .info {
-      margin-top: 22px;
-      color: rgba(255,255,255,0.45);
-      font-size: 13px;
-    }
+@keyframes stars {
+  from {
+    transform: translate3d(0,0,0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(100px,180px,0) rotate(8deg);
+  }
+}
 
-    .footer {
-      margin-top: 35px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-    }
-  </style>
+/* =========================
+   NAVBAR
+========================= */
+
+nav {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 1050px);
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 22px;
+  background: rgba(255,255,255,.055);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  box-shadow: 0 15px 50px rgba(0,0,0,.35);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-size: 15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,.65);
+  text-decoration: none;
+  font-size: 13px;
+  transition: .3s;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 20px 70px;
+}
+
+.hero-content {
+  max-width: 850px;
+  animation: heroIn 1.4s ease forwards;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.orb {
+  width: 125px;
+  height: 125px;
+  margin: 0 auto 35px;
+  border-radius: 50%;
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 25%, white, #a7c8ff 10%, #506eff 28%, #241f55 65%, #06070e 100%);
+  box-shadow:
+    0 0 30px rgba(120,150,255,.7),
+    0 0 100px rgba(90,110,255,.35),
+    inset -20px -25px 40px rgba(0,0,0,.5);
+  animation: orbFloat 4s ease-in-out infinite;
+}
+
+.orb::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 1px solid rgba(150,180,255,.25);
+  animation: ring 7s linear infinite;
+}
+
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: -35px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.08);
+  animation: ring 12s linear infinite reverse;
+}
+
+@keyframes orbFloat {
+  0%,100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes ring {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.04);
+  }
+}
+
+.kicker {
+  color: rgba(255,255,255,.5);
+  letter-spacing: 5px;
+  font-size: 11px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(55px, 12vw, 125px);
+  letter-spacing: -7px;
+  line-height: .9;
+  background: linear-gradient(120deg, white, #9db9ff, #ffffff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 25px;
+}
+
+.hero p {
+  max-width: 550px;
+  margin: auto;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,.55);
+}
+
+.download {
+  display: inline-flex;
+  margin-top: 35px;
+  padding: 17px 30px;
+  border-radius: 18px;
+  color: #05060a;
+  background: white;
+  text-decoration: none;
+  font-weight: 700;
+  transition: .35s;
+  box-shadow: 0 0 0 rgba(255,255,255,0);
+}
+
+.download:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 60px rgba(150,180,255,.35);
+}
+
+.version {
+  margin-top: 15px;
+  color: rgba(255,255,255,.3);
+  font-size: 12px;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+  width: min(1100px, 92%);
+  margin: auto;
+  padding: 110px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title span {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,.35);
+}
+
+.section-title h2 {
+  font-size: clamp(35px, 6vw, 65px);
+  margin-top: 12px;
+  letter-spacing: -3px;
+}
+
+/* =========================
+   GLASS CARDS
+========================= */
+
+.glass {
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.045);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 28px;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    0 25px 80px rgba(0,0,0,.3);
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+  padding: 45px;
+  text-align: center;
+}
+
+.about p {
+  color: rgba(255,255,255,.55);
+  line-height: 1.9;
+  font-size: 17px;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 18px;
+}
+
+.feature {
+  padding: 35px;
+  min-height: 210px;
+  transition: .4s;
+}
+
+.feature:hover {
+  transform: translateY(-8px);
+  background: rgba(255,255,255,.075);
+  border-color: rgba(255,255,255,.2);
+}
+
+.feature-icon {
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.feature h3 {
+  margin-bottom: 12px;
+}
+
+.feature p {
+  color: rgba(255,255,255,.45);
+  line-height: 1.6;
+}
+
+/* =========================
+   AI CHAT
+========================= */
+
+.chat {
+  max-width: 650px;
+  margin: auto;
+  padding: 25px;
+}
+
+.chat-top {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.message {
+  margin-top: 18px;
+  padding: 14px 17px;
+  border-radius: 17px;
+  max-width: 80%;
+  animation: messageIn 1s ease both;
+}
+
+.message.ai {
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.75);
+}
+
+.message.user {
+  margin-left: auto;
+  background: white;
+  color: black;
+  animation-delay: .5s;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+.download-section {
+  text-align: center;
+}
+
+.download-box {
+  padding: 60px 25px;
+}
+
+.download-box h2 {
+  font-size: clamp(40px, 7vw, 75px);
+  letter-spacing: -4px;
+}
+
+.download-box p {
+  color: rgba(255,255,255,.45);
+  margin-top: 15px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  text-align: center;
+  padding: 50px 20px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  color: rgba(255,255,255,.3);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  h1 {
+    letter-spacing: -4px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 80px 0;
+  }
+
+  .about,
+  .feature,
+  .download-box {
+    padding: 30px;
+  }
+
+  .orb {
+    width: 100px;
+    height: 100px;
+  }
+}
+</style>
+
 </head>
 
 <body>
 
-  <div class="glass">
+<div class="space"></div>
 
-    <div class="logo">ASTRA</div>
+<nav>
+  <div class="brand">ASTRA</div>
 
-    <div class="tagline">
-      Your personal AI assistant.
-    </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#download">Download</a>
+  </div>
+</nav>
 
-    <a
-      class="download"
-      href="https://github.com/darshbhavsar2008-ops/astra-download/releases/download/v1.0.0/app-release.apk">
-      Download Astra
-    </a>
+<!-- HERO -->
 
-    <div class="info">
-      Android · Version 1.0.0 · 59.6 MB
-    </div>
+<header class="hero">
 
-    <div class="footer">
-      Built with Flutter · Astra
-    </div>
+  <div class="hero-content">
+
+```
+<div class="orb"></div>
+
+<div class="kicker">
+  Personal Artificial Intelligence
+</div>
+
+<h1>ASTRA</h1>
+
+<p>
+  Your personal AI assistant.
+  Think, create, explore and discover —
+  all from one intelligent space.
+</p>
+
+<a
+  class="download"
+  href="https://github.com/darshbhavsar2008-ops/astra-download/releases/download/v1.0.0/app-release.apk">
+  ↓ &nbsp; Download Astra
+</a>
+
+<div class="version">
+  Android · v1.0.0 · 59.6 MB
+</div>
+```
 
   </div>
+
+</header>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+  <div class="section-title">
+    <span>THE IDEA</span>
+    <h2>More than an assistant.</h2>
+  </div>
+
+  <div class="glass about">
+
+```
+<p>
+  Astra is a personal AI experience designed to feel simple,
+  intelligent and futuristic. Built to become a place where
+  you can ask questions, explore ideas, create and interact
+  with your own AI assistant.
+</p>
+```
+
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section id="features">
+
+  <div class="section-title">
+    <span>EXPLORE ASTRA</span>
+    <h2>Built for curiosity.</h2>
+  </div>
+
+  <div class="features">
+
+```
+<div class="glass feature">
+  <div class="feature-icon">✦</div>
+  <h3>AI Conversations</h3>
+  <p>
+    Ask questions, explore ideas and have natural conversations
+    with Astra.
+  </p>
+</div>
+
+<div class="glass feature">
+  <div class="feature-icon">◌</div>
+  <h3>Personal</h3>
+  <p>
+    A personal assistant experience designed around the way
+    you interact with AI.
+  </p>
+</div>
+
+<div class="glass feature">
+  <div class="feature-icon">∞</div>
+  <h3>Always Evolving</h3>
+  <p>
+    Astra is an evolving project with more capabilities
+    planned for the future.
+  </p>
+</div>
+
+<div class="glass feature">
+  <div class="feature-icon">⌁</div>
+  <h3>Liquid Glass</h3>
+  <p>
+    A futuristic interface inspired by light, glass,
+    depth and motion.
+  </p>
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- AI PREVIEW -->
+
+<section>
+
+  <div class="section-title">
+    <span>ASTRA EXPERIENCE</span>
+    <h2>Just ask.</h2>
+  </div>
+
+  <div class="glass chat">
+
+```
+<div class="chat-top">
+  ✦ ASTRA
+</div>
+
+<div class="message ai">
+  Hello. I'm Astra.
+</div>
+
+<div class="message user">
+  What should I explore today?
+</div>
+
+<div class="message ai">
+  Something you've never explored before.
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- DOWNLOAD -->
+
+<section id="download" class="download-section">
+
+  <div class="glass download-box">
+
+```
+<div class="kicker">
+  AVAILABLE NOW
+</div>
+
+<h2>Enter Astra.</h2>
+
+<p>
+  Download the Android app and start exploring.
+</p>
+
+<a
+  class="download"
+  href="https://github.com/darshbhavsar2008-ops/astra-download/releases/download/v1.0.0/app-release.apk">
+  ↓ &nbsp; Get Astra for Android
+</a>
+
+<div class="version">
+  Version 1.0.0 · Android · 59.6 MB
+</div>
+```
+
+  </div>
+
+</section>
+
+<footer>
+
+ASTRA ✦   A personal AI project
+
+<br><br>
+
+© 2026 Astra
+
+</footer>
 
 </body>
 </html>
